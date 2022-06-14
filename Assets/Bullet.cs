@@ -7,7 +7,7 @@ public class Bullet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -25,6 +25,16 @@ public class Bullet : MonoBehaviour
         //一定距離進んだら消滅する
         if (pos.z >= 20)
         {
+            Destroy(this.gameObject);
+        }
+    }
+    //当たり判定用関数
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Enemy")
+        {
+            //当たったオブジェクトのenemyスクリプトを呼び出してDamege関数を実行させる
+            other.GetComponent<Enemy>().Damage();
             Destroy(this.gameObject);
         }
     }
