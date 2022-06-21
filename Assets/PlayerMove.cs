@@ -68,25 +68,25 @@ public class PlayerMove : MonoBehaviour
         if (Input.GetKey(KeyCode.RightArrow))
         {
             //右方向に0.01動き
-            pos.x += 0.01f;
+            pos.x += 0.1f;
         }
         //左矢印キーが入力されたとき
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             //左方向に0.01動き
-            pos.x -= 0.01f;
+            pos.x -= 0.1f;
         }
         //上矢印キーが入力されたとき
         if (Input.GetKey(KeyCode.UpArrow))
         {
             //上方向に0.01動き
-            pos.z += 0.01f;
+            pos.z += 0.1f;
         }
         //下矢印キーが入力されたとき
         if (Input.GetKey(KeyCode.DownArrow))
         {
             //下方向に0.01動き
-            pos.z -= 0.01f;
+            pos.z -= 0.1f;
         }
         transform.position = new Vector3(
             Mathf.Clamp(pos.x, leftBottom.x + transform.localScale.x - Left, RightTop.x - transform.localScale.x - Right),
