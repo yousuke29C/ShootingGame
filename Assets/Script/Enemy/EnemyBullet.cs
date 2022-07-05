@@ -4,13 +4,21 @@ using UnityEngine;
 
 public class EnemyBullet : MonoBehaviour
 {
+
+    public GManager gManager;
+
     private void OnTriggerEnter(Collider other)
     {
         //もし当たったオブジェクトがPlayer or PlayerBodyだったら
         if (other.gameObject.tag == "Player" || other.gameObject.tag == "playerBody")
         {
+
             //自分を消滅させる
             Destroy(this.gameObject);
+
+            //当たったオブジェクトのPlayerスクリプトを呼び出してDamege関数を実行させる
+            other.GetComponent<PlayerMove>().Damage();
+            //Destroy(this.gameObject);
         }
     }
     //弾のスピード

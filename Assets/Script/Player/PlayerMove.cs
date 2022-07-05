@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerMove : MonoBehaviour
 {
+    public int PlayerHp;
 
     //子オブジェクトのサイズを入れるための変数
     private float Left, Right, Top, Bottom;
@@ -17,6 +20,9 @@ public class PlayerMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //生成時に体力を指定しておく
+        PlayerHp = 40;
+
         //カメラとプレイヤーの距離を測る(表示画面の四隅を設定するために必須)
         var distance = Vector3.Distance(Camera.main.transform.position, transform.position);
 
@@ -64,33 +70,93 @@ public class PlayerMove : MonoBehaviour
         //プレイヤーのワールド座標を取得
         Vector3 pos = transform.position;
 
-        //右矢印キーが入力されたとき
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (PlayerHp >= 0)
         {
-            //右方向に0.01動き
-            pos.x += 0.1f;
+
+            //スピード変換
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+
+                //右矢印キーが入力されたとき
+                if (Input.GetKey(KeyCode.RightArrow))
+                {
+                    //右方向に0.01動き
+                    pos.x += 0.1f;
+                }
+                //左矢印キーが入力されたとき
+                if (Input.GetKey(KeyCode.LeftArrow))
+                {
+                    //左方向に0.01動き
+                    pos.x -= 0.1f;
+                }
+                //上矢印キーが入力されたとき
+                if (Input.GetKey(KeyCode.UpArrow))
+                {
+                    //上方向に0.01動き
+                    pos.z += 0.1f;
+                }
+                //下矢印キーが入力されたとき
+                if (Input.GetKey(KeyCode.DownArrow))
+                {
+                    //下方向に0.01動き
+                    pos.z -= 0.1f;
+                }
+
+            }
+
+            //右矢印キーが入力されたとき
+            if (Input.GetKey(KeyCode.RightArrow))
+            {
+                //右方向に0.01動き
+                pos.x += 0.1f;
+            }
+            //左矢印キーが入力されたとき
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                //左方向に0.01動き
+                pos.x -= 0.1f;
+            }
+            //上矢印キーが入力されたとき
+            if (Input.GetKey(KeyCode.UpArrow))
+            {
+                //上方向に0.01動き
+                pos.z += 0.1f;
+            }
+            //下矢印キーが入力されたとき
+            if (Input.GetKey(KeyCode.DownArrow))
+            {
+                //下方向に0.01動き
+                pos.z -= 0.1f;
+            }
+            transform.position = new Vector3(
+                Mathf.Clamp(pos.x, leftBottom.x + transform.localScale.x - Left, RightTop.x - transform.localScale.x - Right),
+                pos.y,
+                Mathf.Clamp(pos.z, leftBottom.z + transform.localScale.z - Bottom, RightTop.z - transform.localScale.z - Top));
         }
-        //左矢印キーが入力されたとき
-        if (Input.GetKey(KeyCode.LeftArrow))
+            if (Input.GetKey(KeyCode.R))
+            {
+
+                {
+                    string activeSceneName = SceneManager.GetActiveScene().name;
+                    SceneManager.LoadScene(activeSceneName);
+                }
+
+            }
+
+        if (PlayerHp <= 0)
         {
-            //左方向に0.01動き
-            pos.x -= 0.1f;
+
+            //if (Input.GetKey(KeyCode.R))
+            //{
+            //    PlayerHp = 40;
+            //}
         }
-        //上矢印キーが入力されたとき
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-            //上方向に0.01動き
-            pos.z += 0.1f;
-        }
-        //下矢印キーが入力されたとき
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            //下方向に0.01動き
-            pos.z -= 0.1f;
-        }
-        transform.position = new Vector3(
-            Mathf.Clamp(pos.x, leftBottom.x + transform.localScale.x - Left, RightTop.x - transform.localScale.x - Right),
-            pos.y,
-            Mathf.Clamp(pos.z, leftBottom.z + transform.localScale.z - Bottom, RightTop.z - transform.localScale.z - Top));
+    }
+    public void Damage()
+    {
+        //PlayerHpのhpを1へらす
+        PlayerHp = PlayerHp - 1;
+        //現在の体力をConsoleビューに表示する
+        Debug.Log(PlayerHp);
     }
 }
